@@ -1,5 +1,7 @@
 FROM ubuntu:20.04
 
+ENV DEBIAN_FRONTEND=noninteractive apt
+
 RUN apt update && \
     apt upgrade -y && \
     apt install -y wget gnupg software-properties-common && \
