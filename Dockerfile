@@ -1,16 +1,17 @@
-FROM ubuntu:20.04
+FROM ubuntu:21.04
 
-ENV DEBIAN_FRONTEND=noninteractive
+RUN apt-get update && \
+    apt install -y wget gpg software-properties-common && \
+    apt-get update
 
-RUN apt update && \
-    apt upgrade -y && \
-    apt install -y wget gnupg software-properties-common && \
-    apt-get update && \
-    wget -qO - https://qgis.org/downloads/qgis-2021.gpg.key | \
+RUN wget -qO - https://qgis.org/downloads/qgis-2021.gpg.key | \
     gpg --no-default-keyring --keyring gnupg-ring:/etc/apt/trusted.gpg.d/qgis-archive.gpg --import && \
-    chmod a+r /etc/apt/trusted.gpg.d/qgis-archive.gpg \
-    add-apt-repository "deb https://qgis.org/ubuntu $(lsb_release -c -s) main" && \
-    apt-get update 
+    chmod a+r /etc/apt/trusted.gpg.d/qgis-archive.gpg && \
+    apt update
+
+RUN echo "deb https://qgis.org/ubuntu-ltr $(lsb_release -c -s) main" >> /etc/apt/sources.list && \
+    echo "deb-src https://qgis.org/ubuntu-ltr $(lsb_release -c -s) main" >> /etc/apt/sources.list && \
+    apt update
 
 RUN apt install -y qgis qgis-plugin-grass && \
     apt autoclean && \
