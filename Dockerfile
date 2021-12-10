@@ -16,5 +16,5 @@ RUN echo "deb https://qgis.org/ubuntu-ltr $(lsb_release -c -s) main" >> /etc/apt
 RUN apt install -y qgis qgis-plugin-grass
 
 ##    apt autoclean && \
-    apt autoremove --purge -y && \
-    rm -rf /var/lib/apt/lists/*
+##    apt autoremove --purge -y && \
+##    rm -rf /var/lib/apt/lists/*
