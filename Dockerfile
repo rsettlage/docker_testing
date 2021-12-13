@@ -1,7 +1,10 @@
-FROM ubuntu:21.04
+FROM ubuntu:18.04
+
+ARG DEBIAN_FRONTEND=noninteractive
+ENV TZ=America/New_York
 
 RUN apt-get update && \
-    apt install -y wget gpg software-properties-common && \
+    apt install -y mlocate wget gpg software-properties-common && \
     apt-get update
 
 RUN wget -qO - https://qgis.org/downloads/qgis-2021.gpg.key | \
@@ -15,6 +18,6 @@ RUN echo "deb https://qgis.org/ubuntu-ltr $(lsb_release -c -s) main" >> /etc/apt
 
 RUN apt install -y qgis qgis-plugin-grass
 
-##    apt autoclean && \
-##    apt autoremove --purge -y && \
-##    rm -rf /var/lib/apt/lists/*
+RUN apt autoclean && \
+    apt autoremove --purge -y && \
+    rm -rf /var/lib/apt/lists/*
